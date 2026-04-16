@@ -32,7 +32,7 @@
 					</div>
 				</div>
 
-				<div class="bg-orange-50 border border-orange-100 rounded-3xl p-5">
+				{{-- <div class="bg-orange-50 border border-orange-100 rounded-3xl p-5">
 					<div class="flex items-start gap-3">
 						<div class="w-10 h-10 rounded-2xl bg-white flex items-center justify-center text-orange-500 shadow-sm">
 							<i data-lucide="shield-check" class="w-5 h-5"></i>
@@ -42,7 +42,7 @@
 							<p class="text-sm text-gray-600 mt-1">Isi password saat ini dan password baru jika ingin mengganti kata sandi.</p>
 						</div>
 					</div>
-				</div>
+				</div> --}}
 			</div>
 
 			<div class="xl:col-span-2">

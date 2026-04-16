@@ -63,7 +63,7 @@
                     @enderror
                 </div>
 
-                <!-- Kategori Fasilitas -->
+
                 <div class="mb-5">
                     <label for="kategori" class="block text-sm font-semibold text-gray-700 mb-2">
                         Kategori Fasilitas <span class="text-red-500">*</span>
@@ -86,7 +86,6 @@
                     @enderror
                 </div>
 
-                <!-- Lokasi -->
                 <div class="mb-5">
                     <label for="lokasi" class="block text-sm font-semibold text-gray-700 mb-2">
                         Lokasi <span class="text-red-500">*</span>
@@ -108,7 +107,6 @@
                 </div>
             </div>
 
-            <!-- Detail Masalah -->
             <div class="mb-8 pt-6 border-t border-gray-200">
                 <div class="flex items-center gap-2 mb-6">
                     <div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
@@ -117,7 +115,6 @@
                     <h2 class="text-lg sm:text-xl font-bold text-gray-900">Detail Masalah</h2>
                 </div>
 
-                <!-- Deskripsi Lengkap -->
                 <div class="mb-5">
                     <label for="deskripsi" class="block text-sm font-semibold text-gray-700 mb-2">
                         Deskripsi Lengkap <span class="text-red-500">*</span>
@@ -136,51 +133,8 @@
                         <p class="text-xs text-gray-500 mt-1">Jelaskan kronologi dan kondisi masalah sejelas mungkin</p>
                     @enderror
                 </div>
-
-                <!-- Tingkat Prioritas -->
-                {{-- <div class="mb-5">
-                    <label class="block text-sm font-semibold text-gray-700 mb-3">
-                        Tingkat Prioritas <span class="text-red-500">*</span>
-                    </label>
-                    <div class="grid grid-cols-3 gap-4">
-                        <!-- Rendah -->
-                        <label class="relative cursor-pointer">
-                            <input type="radio" name="prioritas" value="rendah" class="peer sr-only" required>
-                            <div class="border-2 border-gray-300 rounded-xl p-4 text-center peer-checked:border-green-500 peer-checked:bg-green-50 transition-all hover:border-green-400">
-                                <div class="w-6 h-6 mx-auto mb-2 rounded-full border-2 border-gray-300 peer-checked:border-green-500 peer-checked:bg-green-500 flex items-center justify-center">
-                                    <div class="w-2 h-2 bg-white rounded-full hidden peer-checked:block"></div>
-                                </div>
-                                <span class="font-semibold text-gray-700 peer-checked:text-green-600">Rendah</span>
-                            </div>
-                        </label>
-
-                        <!-- Sedang -->
-                        <label class="relative cursor-pointer">
-                            <input type="radio" name="prioritas" value="sedang" class="peer sr-only">
-                            <div class="border-2 border-gray-300 rounded-xl p-4 text-center peer-checked:border-orange-500 peer-checked:bg-orange-50 transition-all hover:border-orange-400">
-                                <div class="w-6 h-6 mx-auto mb-2 rounded-full border-2 border-gray-300 peer-checked:border-orange-500 peer-checked:bg-orange-500 flex items-center justify-center">
-                                    <div class="w-2 h-2 bg-white rounded-full hidden peer-checked:block"></div>
-                                </div>
-                                <span class="font-semibold text-gray-700 peer-checked:text-orange-600">Sedang</span>
-                            </div>
-                        </label>
-
-                        <!-- Tinggi -->
-                        <label class="relative cursor-pointer">
-                            <input type="radio" name="prioritas" value="tinggi" class="peer sr-only">
-                            <div class="border-2 border-gray-300 rounded-xl p-4 text-center peer-checked:border-red-500 peer-checked:bg-red-50 transition-all hover:border-red-400">
-                                <div class="w-6 h-6 mx-auto mb-2 rounded-full border-2 border-gray-300 peer-checked:border-red-500 peer-checked:bg-red-500 flex items-center justify-center">
-                                    <div class="w-2 h-2 bg-white rounded-full hidden peer-checked:block"></div>
-                                </div>
-                                <span class="font-semibold text-gray-700 peer-checked:text-red-600">Tinggi</span>
-                            </div>
-                        </label>
-                    </div>
-                    <p class="text-xs text-gray-500 mt-2">Rendah: tidak mengganggu aktivitas | Sedang: mengganggu sebagian aktivitas | Tinggi: mengganggu aktivitas secara signifikan</p>
-                </div> --}}
             </div>
 
-            <!-- Foto Bukti -->
             <div class="mb-8 pt-6 border-t border-gray-200">
                 <div class="flex items-center gap-2 mb-6">
                     <div class="w-8 h-8 bg-orange-100 rounded-lg flex items-center justify-center">
@@ -246,7 +200,6 @@ function previewFoto(input) {
         return;
     }
 
-    // Jika ada file, sembunyikan upload area dan hapus dashed border
     if (input.files.length > 0) {
         uploadArea.style.display = 'none';
         dropzone.classList.remove('border-2', 'border-dashed', 'border-gray-300', 'p-5', 'sm:p-8', 'hover:border-orange-400', 'cursor-pointer');

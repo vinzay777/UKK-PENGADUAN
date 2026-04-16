@@ -99,11 +99,11 @@
                             Kamu belum pernah mengirim pengaduan.
                         @endif
                     </p>
-                    @if($filter === 'semua')
+                    {{-- @if($filter === 'semua')
                     <a href="{{ route('siswa.pengaduan') }}" class="mt-4 px-5 py-2 bg-orange-500 text-white text-sm font-medium rounded-xl hover:bg-orange-600 transition">
                         Buat Pengaduan
                     </a>
-                    @endif
+                    @endif --}}
                 </div>
             @endforelse
 

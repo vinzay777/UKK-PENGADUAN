@@ -9,7 +9,7 @@
 @section('title', ($isCreate ? 'Tambah' : ($isEdit ? 'Edit' : 'Profil')) . ' Kategori - FacilityHub')
 
 @section('content')
-<div class="flex flex-col h-full">	
+<div class="flex flex-col h-full">
 	<div class="flex items-center gap-2 text-sm text-gray-600 mb-4">
 		<a href="{{ route('admin.kategori.index') }}" class="hover:text-orange-500">Kelola Kategori</a>
 		<i data-lucide="chevron-right" class="w-3 h-3"></i>
@@ -173,7 +173,7 @@
 							required
 						>
 						@error('nama')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
-						<p class="text-gray-500 text-xs mt-2">Nama kategori harus unik dan deskriptif</p>
+						{{-- <p class="text-gray-500 text-xs mt-2">Nama kategori harus unik dan deskriptif</p> --}}
 					</div>
 
 					<!-- Action Buttons -->
