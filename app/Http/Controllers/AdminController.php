@@ -83,15 +83,34 @@ class AdminController extends Controller
     public function updateStatus(Request $request, Pengaduan $pengaduan)
     {
         $request->validate([
-            'status' => 'required|in:menunggu,diproses,selesai,ditolak',
+            'status' => 'required|in:menunggu,diproses,selesai',
+            'feedback' => 'nullable|string',
+            'foto_progres' => 'nullable|array',
+            'foto_progres.*' => 'image|mimes:jpeg,png,jpg,gif|max:5120',
         ]);
 
-        $pengaduan->update([
+        $data = [
             'status'          => $request->status,
             'tanggal_selesai' => $request->status === 'selesai' ? now() : null,
-        ]);
+            'feedback'        => $request->feedback,
+        ];
 
-        return back()->with('success', 'Status berhasil diperbarui.');
+        // Handle foto progres
+        if ($request->hasFile('foto_progres')) {
+            $existingFotos = $pengaduan->foto_progres ?? [];
+
+            foreach ($request->file('foto_progres') as $foto) {
+                $filename = time() . '_' . uniqid() . '.' . $foto->getClientOriginalExtension();
+                $foto->storeAs('pengaduan/progres', $filename, 'public');
+                $existingFotos[] = 'pengaduan/progres/' . $filename;
+            }
+
+            $data['foto_progres'] = $existingFotos;
+        }
+
+        $pengaduan->update($data);
+
+        return back()->with('success', 'Status dan feedback berhasil diperbarui.');
     }
 
     public function show(Pengaduan $pengaduan)

@@ -80,7 +80,7 @@
             @endforeach
         </div>
 
-        {{-- Middle Row: Quick Stats + Category Breakdown --}}
+
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-4">
 
             {{-- Progress Status --}}
@@ -138,8 +138,8 @@
                 </div>
             </div>
 
-            {{-- Aspirasi Terbaru --}}
-            <div class="bg-white border border-gray-100 rounded-xl shadow-sm p-4 sm:p-5 xl:col-span-2 flex flex-col">
+
+            <div class="bg-white border border-gray-100 rounded-xl shadow-sm p-4 sm:p-5 xl:col-span-2 flex flex-col ">
                 <div class="flex items-center justify-between mb-4">
                     <h2 class="text-sm font-bold text-gray-700 flex items-center gap-2">
                         <i data-lucide="list" class="w-4 h-4 text-blue-500"></i>
@@ -168,7 +168,7 @@
                                     'menunggu' => 'bg-yellow-100 text-yellow-700',
                                     'diproses'  => 'bg-blue-100 text-blue-700',
                                     'selesai'   => 'bg-green-100 text-green-700',
-                                    'ditolak'   => 'bg-red-100 text-red-700',
+
                                 ];
                             @endphp
                             @forelse ($pengaduanTerbaru as $p)

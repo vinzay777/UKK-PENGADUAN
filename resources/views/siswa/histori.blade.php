@@ -56,7 +56,6 @@
                         'menunggu' => ['label' => 'Menunggu',        'border' => 'border-yellow-400', 'hover' => 'hover:bg-yellow-50', 'badge' => 'bg-yellow-100 text-yellow-600'],
                         'diproses' => ['label' => 'Sedang Diproses', 'border' => 'border-blue-400',   'hover' => 'hover:bg-blue-50',   'badge' => 'bg-blue-100 text-blue-600'],
                         'selesai'  => ['label' => 'Selesai',         'border' => 'border-green-400',  'hover' => 'hover:bg-green-50',  'badge' => 'bg-green-100 text-green-600'],
-                        'ditolak'  => ['label' => 'Ditolak',         'border' => 'border-red-400',    'hover' => 'hover:bg-red-50',    'badge' => 'bg-red-100 text-red-500'],
                     ];
                     $s = $statusMap[$p->status] ?? $statusMap['menunggu'];
                     $deskripsiPreview = \Illuminate\Support\Str::limit($p->deskripsi, 60);
@@ -70,14 +69,28 @@
                     data-tanggal="{{ $p->tanggal_lapor->locale('id')->translatedFormat('d F Y') }}"
                     data-status="{{ $s['label'] }}"
                     data-catatan-admin="-"
-                    data-foto="{{ json_encode(array_map(fn($f) => asset('storage/'.$f), $p->foto ?? [])) }}">
+                    data-feedback="{{ $p->feedback ?? '' }}"
+                    data-foto="{{ json_encode(array_map(fn($f) => asset('storage/'.$f), $p->foto ?? [])) }}"
+                    data-foto-progres="{{ json_encode(array_map(fn($f) => asset('storage/'.$f), $p->foto_progres ?? [])) }}">
 
                     <div class="flex-1 min-w-0">
-                        <p class="font-semibold text-gray-900">{{ $p->judul }}</p>
-                        <p class="text-sm text-blue-500 mt-0.5 truncate">{{ $p->lokasi }} - {{ $deskripsiPreview }}</p>
-                        <div class="flex items-center gap-1 text-xs text-gray-400 mt-1">
-                            <i data-lucide="clock" class="w-3 h-3"></i>
-                            <span>{{ $p->created_at->locale('id')->diffForHumans() }}</span>
+                        <div class="flex items-start gap-2">
+                            <div class="flex-1 min-w-0">
+                                <p class="font-semibold text-gray-900">{{ $p->judul }}</p>
+                                <p class="text-sm text-blue-500 mt-0.5 truncate">{{ $p->lokasi }} - {{ $deskripsiPreview }}</p>
+                                <div class="flex items-center gap-1 text-xs text-gray-400 mt-1">
+                                    <i data-lucide="clock" class="w-3 h-3"></i>
+                                    <span>{{ $p->created_at->locale('id')->diffForHumans() }}</span>
+                                </div>
+                            </div>
+                            @if($p->feedback)
+                            {{-- <div class="flex-shrink-0 ml-2">
+                                <div class="flex items-center gap-1 bg-blue-100 text-blue-600 px-2 py-1 rounded-full whitespace-nowrap" title="Ada feedback dari admin">
+                                    <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                                    <span class="text-xs font-medium">Feedback</span>
+                                </div>
+                            </div> --}}
+                            @endif
                         </div>
                     </div>
                     <div class="flex items-center justify-between sm:justify-end gap-3 sm:ml-4 shrink-0 w-full sm:w-auto">

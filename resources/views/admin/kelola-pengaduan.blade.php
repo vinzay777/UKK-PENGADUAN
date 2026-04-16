@@ -90,7 +90,6 @@
                                 <option value="menunggu" {{ request('status') === 'menunggu' ? 'selected' : '' }}>Menunggu</option>
                                 <option value="diproses" {{ request('status') === 'diproses' ? 'selected' : '' }}>Diproses</option>
                                 <option value="selesai"  {{ request('status') === 'selesai'  ? 'selected' : '' }}>Selesai</option>
-                                <option value="ditolak"  {{ request('status') === 'ditolak'  ? 'selected' : '' }}>Ditolak</option>
                             </select>
                         </div>
                         <div>
@@ -168,7 +167,7 @@
                                     'menunggu' => 'bg-yellow-100 text-yellow-700',
                                     'diproses'  => 'bg-blue-100 text-blue-700',
                                     'selesai'   => 'bg-green-100 text-green-700',
-                                    'ditolak'   => 'bg-red-100 text-red-700',
+
                                 ];
                             @endphp
                             @forelse ($pengaduan as $p)

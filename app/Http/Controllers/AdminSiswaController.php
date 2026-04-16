@@ -23,6 +23,7 @@ class AdminSiswaController extends Controller
         $validated = $request->validate([
             'nama' => 'required|string|max:100',
             'nisn' => 'required|string|max:20|unique:siswa,nisn',
+            'email' => 'required|email|max:100|unique:siswa,email',
             'kelas' => 'required|string|max:50',
             'kata_sandi' => 'required|string|min:6',
         ], [
@@ -31,6 +32,10 @@ class AdminSiswaController extends Controller
             'nisn.required' => 'NISN wajib diisi.',
             'nisn.unique' => 'NISN sudah terdaftar.',
             'nisn.max' => 'NISN maksimal 20 karakter.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Email harus format yang valid.',
+            'email.unique' => 'Email sudah terdaftar.',
+            'email.max' => 'Email maksimal 100 karakter.',
             'kelas.required' => 'Kelas wajib diisi.',
             'kelas.max' => 'Kelas maksimal 50 karakter.',
             'kata_sandi.required' => 'Password wajib diisi.',
@@ -40,6 +45,7 @@ class AdminSiswaController extends Controller
         Siswa::create([
             'nama' => $validated['nama'],
             'nisn' => $validated['nisn'],
+            'email' => $validated['email'],
             'kelas' => $validated['kelas'],
             'kata_sandi' => $validated['kata_sandi'],
         ]);
@@ -57,11 +63,12 @@ class AdminSiswaController extends Controller
         return view('admin.siswa.form',['mode' => 'edit', 'siswa'=> $siswa ]);
     }
 
-       public function update(Request $request, Siswa $siswa)
+    public function update(Request $request, Siswa $siswa)
     {
         $validated = $request->validate([
             'nama' => 'required|string|max:100',
             'nisn' => 'required|string|max:20|unique:siswa,nisn,' . $siswa->id,
+            'email' => 'required|email|max:100|unique:siswa,email,' . $siswa->id,
             'kelas' => 'required|string|max:50',
         ], [
             'nama.required' => 'Nama wajib diisi.',
@@ -69,13 +76,17 @@ class AdminSiswaController extends Controller
             'nisn.required' => 'NISN wajib diisi.',
             'nisn.unique' => 'NISN sudah terdaftar.',
             'nisn.max' => 'NISN maksimal 20 karakter.',
+            'email.required' => 'Email wajib diisi.',
+            'email.email' => 'Email harus format yang valid.',
+            'email.unique' => 'Email sudah terdaftar.',
+            'email.max' => 'Email maksimal 100 karakter.',
             'kelas.required' => 'Kelas wajib diisi.',
             'kelas.max' => 'Kelas maksimal 50 karakter.',
         ]);
 
         $siswa->update($validated);
 
-        return redirect()->route('admin.siswa.show', $siswa)->with('success', 'Data siswa berhasil diperbarui.');
+        return redirect()->route('admin.siswa.index')->with('success', 'Data siswa berhasil diperbarui.');
     }
 
     public function destroy(Siswa $siswa)

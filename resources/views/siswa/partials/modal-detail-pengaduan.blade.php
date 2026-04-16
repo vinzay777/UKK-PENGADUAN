@@ -22,8 +22,6 @@
 
             <!-- Status & Kategori -->
             <div class="flex items-center gap-3">
-                <span id="modal-status-badge" class="text-xs font-semibold px-3 py-1 rounded-full"></span>
-                <span class="text-xs text-gray-400">•</span>
                 <span id="modal-kategori" class="text-xs text-gray-500 font-medium"></span>
             </div>
 
@@ -63,6 +61,22 @@
                 <div id="modal-foto-list" class="flex flex-wrap gap-2"></div>
             </div>
 
+            <div id="modal-feedback-wrapper" class="hidden">
+                <div class="flex items-center gap-2 text-gray-400 mb-2">
+                    <i data-lucide="message-circle" class="w-3.5 h-3.5"></i>
+                    <span class="text-xs font-medium">Feedback dari Admin</span>
+                </div>
+                <p id="modal-feedback" class="text-sm text-gray-700 leading-relaxed bg-blue-50 border border-blue-200 rounded-xl p-3"></p>
+            </div>
+
+            <div id="modal-foto-progres-wrapper" class="hidden">
+                <div class="flex items-center gap-2 text-gray-400 mb-2">
+                    <i data-lucide="camera" class="w-3.5 h-3.5"></i>
+                    <span class="text-xs font-medium">Foto Progres</span>
+                </div>
+                <div id="modal-foto-progres-list" class="flex flex-wrap gap-2"></div>
+            </div>
+
             <!-- Catatan Admin -->
             <div id="modal-catatan-wrapper">
                 <div class="flex items-center gap-2 text-gray-400 mb-2">
@@ -84,23 +98,20 @@
 
 @push('scripts')
 <script>
-    const statusConfig = {
-        'Sedang Diproses': { bg: 'bg-blue-100',   text: 'text-blue-600'   },
-        'Selesai':         { bg: 'bg-green-100',  text: 'text-green-600'  },
-        'Menunggu':        { bg: 'bg-yellow-100', text: 'text-yellow-600' },
-        'Ditolak':         { bg: 'bg-red-100',    text: 'text-red-500'    },
-    };
+
 
     document.querySelectorAll('.pengaduan-item').forEach(item => {
         item.addEventListener('click', () => {
-            const judul     = item.dataset.judul;
-            const lokasi    = item.dataset.lokasi;
-            const deskripsi = item.dataset.deskripsi;
-            const kategori  = item.dataset.kategori;
-            const tanggal   = item.dataset.tanggal;
-            const status    = item.dataset.status;
-            const catatan   = item.dataset.catatanAdmin;
-            const fotoRaw   = item.dataset.foto;
+            const judul       = item.dataset.judul;
+            const lokasi      = item.dataset.lokasi;
+            const deskripsi   = item.dataset.deskripsi;
+            const kategori    = item.dataset.kategori;
+            const tanggal     = item.dataset.tanggal;
+            const status      = item.dataset.status;
+            const catatan     = item.dataset.catatanAdmin;
+            const fotoRaw     = item.dataset.foto;
+            const feedback    = item.dataset.feedback || '';
+            const fotoProgresRaw = item.dataset.fotoProgres || '[]';
 
             document.getElementById('modal-judul').textContent     = judul;
             document.getElementById('modal-lokasi').textContent    = lokasi;
@@ -109,7 +120,7 @@
             document.getElementById('modal-tanggal').textContent   = tanggal;
             document.getElementById('modal-catatan').textContent   = catatan;
 
-            // Foto
+            // Foto Bukti
             const fotoWrapper = document.getElementById('modal-foto-wrapper');
             const fotoList    = document.getElementById('modal-foto-list');
             fotoList.innerHTML = '';
@@ -128,11 +139,33 @@
                 fotoWrapper.classList.add('hidden');
             }
 
-            const badge = document.getElementById('modal-status-badge');
-            badge.textContent = status;
-            badge.className = 'text-xs font-semibold px-3 py-1 rounded-full';
-            const cfg = statusConfig[status] || { bg: 'bg-gray-100', text: 'text-gray-600' };
-            badge.classList.add(cfg.bg, cfg.text);
+
+            const feedbackWrapper = document.getElementById('modal-feedback-wrapper');
+            if (feedback && feedback.trim() !== '') {
+                document.getElementById('modal-feedback').textContent = feedback;
+                feedbackWrapper.classList.remove('hidden');
+            } else {
+                feedbackWrapper.classList.add('hidden');
+            }
+
+        
+            const fotoProgresWrapper = document.getElementById('modal-foto-progres-wrapper');
+            const fotoProgresList = document.getElementById('modal-foto-progres-list');
+            fotoProgresList.innerHTML = '';
+            let fotoProgres = [];
+            try { fotoProgres = JSON.parse(fotoProgresRaw); } catch(e) {}
+            if (fotoProgres.length > 0) {
+                fotoProgres.forEach(url => {
+                    const img = document.createElement('img');
+                    img.src = url;
+                    img.className = 'w-24 h-24 object-cover rounded-lg border border-green-200 cursor-pointer hover:opacity-90 transition';
+                    img.onclick = () => window.open(url, '_blank');
+                    fotoProgresList.appendChild(img);
+                });
+                fotoProgresWrapper.classList.remove('hidden');
+            } else {
+                fotoProgresWrapper.classList.add('hidden');
+            }
 
             const catatanWrapper = document.getElementById('modal-catatan-wrapper');
             catatanWrapper.style.display = (catatan && catatan !== '-') ? 'block' : 'none';

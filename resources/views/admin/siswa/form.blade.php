@@ -203,6 +203,21 @@
 							@error('nisn')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
 						</div>
 
+						<!-- Email -->
+						<div>
+							<label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+							<input
+								type="email"
+								id="email"
+								name="email"
+								value="{{ old('email', $siswa->email ?? '') }}"
+								class="w-full rounded-2xl border border-gray-200 px-4 py-3 text-sm text-gray-700 outline-none focus:border-orange-400 focus:ring-2 focus:ring-orange-100 @error('email') border-red-500 @enderror"
+								placeholder="Email siswa"
+								required
+							>
+							@error('email')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
+						</div>
+
 						<!-- Kelas -->
 						<div>
 							<label for="kelas" class="block text-sm font-semibold text-gray-700 mb-2">Kelas</label>

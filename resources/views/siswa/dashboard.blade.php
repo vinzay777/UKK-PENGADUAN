@@ -193,13 +193,7 @@
                                     'dot' => 'bg-green-400',
                                     'label' => 'Selesai',
                                 ],
-                                'ditolak' => [
-                                    'border' => 'border-red-400',
-                                    'bg' => 'bg-red-100',
-                                    'text' => 'text-red-600',
-                                    'dot' => 'bg-red-400',
-                                    'label' => 'Ditolak',
-                                ],
+
                                 default => [
                                     'border' => 'border-gray-400',
                                     'bg' => 'bg-gray-100',

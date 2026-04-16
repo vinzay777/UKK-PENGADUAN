@@ -20,10 +20,13 @@ class Pengaduan extends Model
         'tanggal_lapor',
         'tanggal_selesai',
         'foto',
+        'feedback',
+        'foto_progres',
     ];
 
     protected $casts = [
         'foto' => 'array',
+        'foto_progres' => 'array',
         'tanggal_lapor' => 'date',
         'tanggal_selesai' => 'date',
     ];
