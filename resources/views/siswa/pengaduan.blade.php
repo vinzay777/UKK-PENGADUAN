@@ -59,7 +59,6 @@
                     @error('judul')
                         <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                     @else
-                        <p class="text-xs text-gray-500 mt-1">Buat judul yang singkat dan jelas (maksimal 150 karakter)</p>
                     @enderror
                 </div>
 
@@ -102,7 +101,6 @@
                     @error('lokasi')
                         <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                     @else
-                        <p class="text-xs text-gray-500 mt-1">Sebutkan lokasi spesifik termasuk lantai/gedung jika ada</p>
                     @enderror
                 </div>
             </div>
@@ -130,7 +128,6 @@
                     @error('deskripsi')
                         <p class="text-xs text-red-500 mt-1">{{ $message }}</p>
                     @else
-                        <p class="text-xs text-gray-500 mt-1">Jelaskan kronologi dan kondisi masalah sejelas mungkin</p>
                     @enderror
                 </div>
             </div>

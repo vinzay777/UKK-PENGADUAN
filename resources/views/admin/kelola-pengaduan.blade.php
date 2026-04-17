@@ -92,11 +92,11 @@
                                 <option value="selesai"  {{ request('status') === 'selesai'  ? 'selected' : '' }}>Selesai</option>
                             </select>
                         </div>
-                        <div>
+                        {{-- <div>
                             <label class="text-xs text-gray-500 mb-1 block">Lokasi</label>
                             <input type="text" name="lokasi" value="{{ request('lokasi') }}" placeholder="Cari lokasi..."
                                 class="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-blue-300 filter-text-input">
-                        </div>
+                        </div> --}}
                         <div>
                             <label class="text-xs text-gray-500 mb-1 block">Urutkan</label>
                             <select name="sort"
@@ -142,7 +142,7 @@
             </div>
         </div> --}}
 
-        </div>{{-- end stat+filter --}}
+        </div>
 
         {{-- Table --}}
         <div class="px-4 lg:px-6 pb-4">
@@ -184,7 +184,7 @@
                                         'status'      => $p->status,
                                         'foto'        => $p->foto ?? [],
                                         'tgl'         => optional($p->tanggal_lapor)->translatedFormat('d M Y') ?? '-',
-                                        'time'        => $p->created_at->format('H:i'),
+                                        // 'time'        => now()->format('H:i'),
                                         'update_url'  => route('admin.pengaduan.status', $p->id),
                                     ];
                                 @endphp
@@ -192,7 +192,7 @@
                                     <td class="px-4 py-3 text-blue-600 font-semibold">#ASP-{{ $p->id }}</td>
                                     <td class="px-4 py-3">
                                         <p class="text-gray-700 font-medium">{{ optional($p->tanggal_lapor)->translatedFormat('d M Y') ?? '-' }}</p>
-                                        <p class="text-gray-400 text-xs">{{ $p->created_at->format('H:i') }}</p>
+                                        {{-- <p class="text-gray-400 text-xs">{{ now()->format('H:i')}}</p> --}}
                                     </td>
                                     <td class="px-4 py-3">
                                         <p class="text-blue-600 font-medium">{{ $p->siswa->nama ?? '-' }}</p>
@@ -212,12 +212,14 @@
                                     </td>
                                     <td class="px-4 py-3">
                                         <div class="flex items-center gap-2">
+                                            @if($p->status !== 'selesai')
                                             <button
                                                 onclick="openModal({{ json_encode($data) }})"
                                                 class="w-8 h-8 bg-blue-50 hover:bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center transition"
                                                 title="Detail & Update Status">
                                                 <i data-lucide="eye" class="w-4 h-4"></i>
                                             </button>
+                                            @endif
                                         </div>
                                     </td>
                                 </tr>
@@ -230,18 +232,17 @@
                     </table>
                 </div>
 
-                {{-- Pagination --}}
                 <div class="px-4 lg:px-5 py-3 border-t border-gray-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
                     <p class="text-xs text-gray-400">
                         Menampilkan {{ $pengaduan->firstItem() }}–{{ $pengaduan->lastItem() }} dari {{ $pengaduan->total() }} pengaduan
                     </p>
                     <div class="overflow-x-auto max-w-full">{{ $pengaduan->links() }}</div>
                 </div>
-            </div>{{-- end table card --}}
-        </div>{{-- end table section --}}
+            </div>
+        </div>
 
-    </div>{{-- end white card --}}
-</div>{{-- end flex-col wrapper --}}
+    </div>
+</div>
 
 @include('admin.partials.modal-feedback')
 
@@ -279,7 +280,7 @@
         function openModal(data) {
             document.getElementById('m-id').textContent     = '#ASP-' + data.id;
             document.getElementById('m-siswa').textContent  = data.nama + ' (' + data.nis + ')';
-            document.getElementById('m-tgl').textContent    = data.tgl + ', ' + data.time + ' WIB';
+            document.getElementById('m-tgl').textContent    = data.tgl ;
             document.getElementById('m-judul').textContent  = data.judul;
             document.getElementById('m-kat').textContent    = data.kat;
             document.getElementById('m-lokasi').textContent = data.lokasi;
@@ -307,7 +308,6 @@
                 }
             }
 
-            // Set active status button
             document.querySelectorAll('.status-btn').forEach(b => {
                 const active = b.dataset.status.toLowerCase() === data.status.toLowerCase();
                 b.className = b.className
@@ -319,7 +319,6 @@
                 }
             });
 
-            // Sync hidden status input with active button
             const hiddenStatus = document.getElementById('m-status-input');
             if (hiddenStatus) hiddenStatus.value = data.status;
 

@@ -1,12 +1,8 @@
-<!-- Modal Detail Pengaduan -->
 <div id="modalDetail" class="fixed inset-0 z-50 hidden items-center justify-center p-3 sm:p-4">
-    <!-- Backdrop -->
     <div id="modalBackdrop" class="absolute inset-0 bg-black/50 backdrop-blur-sm" onclick="closeModal()"></div>
 
-    <!-- Modal Card -->
     <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg z-10 overflow-hidden max-h-[90vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
 
-        <!-- Header -->
         <div class="bg-gradient-to-r from-orange-400 to-orange-500 px-4 sm:px-6 py-4 sm:py-5 flex items-start justify-between">
             <div>
                 <p class="text-white/80 text-xs font-medium mb-1">Detail Pengaduan</p>
@@ -17,15 +13,11 @@
             </button>
         </div>
 
-        <!-- Body -->
         <div class="px-4 sm:px-6 py-4 sm:py-5 space-y-4">
-
-            <!-- Status & Kategori -->
             <div class="flex items-center gap-3">
                 <span id="modal-kategori" class="text-xs text-gray-500 font-medium"></span>
             </div>
 
-            <!-- Info Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                 <div class="bg-gray-50 rounded-xl p-3">
                     <div class="flex items-center gap-2 text-gray-400 mb-1">
@@ -41,9 +33,15 @@
                     </div>
                     <p id="modal-tanggal" class="text-sm font-semibold text-gray-900"></p>
                 </div>
+                 <div id="modal-tanggal-selesai-wrapper" class="hidden bg-gray-50 rounded-xl p-3">
+                    <div class="flex items-center gap-2 text-gray-400 mb-1">
+                        <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
+                        <span class="text-xs font-medium">Tanggal Selesai</span>
+                    </div>
+                    <p id="modal-tanggal-selesai" class="text-sm font-semibold text-gray-900"></p>
+                </div>
             </div>
 
-            <!-- Deskripsi -->
             <div>
                 <div class="flex items-center gap-2 text-gray-400 mb-2">
                     <i data-lucide="file-text" class="w-3.5 h-3.5"></i>
@@ -52,7 +50,6 @@
                 <p id="modal-deskripsi" class="text-sm text-gray-700 leading-relaxed bg-gray-50 rounded-xl p-3"></p>
             </div>
 
-            <!-- Foto -->
             <div id="modal-foto-wrapper" class="hidden">
                 <div class="flex items-center gap-2 text-gray-400 mb-2">
                     <i data-lucide="image" class="w-3.5 h-3.5"></i>
@@ -77,7 +74,7 @@
                 <div id="modal-foto-progres-list" class="flex flex-wrap gap-2"></div>
             </div>
 
-            <!-- Catatan Admin -->
+
             <div id="modal-catatan-wrapper">
                 <div class="flex items-center gap-2 text-gray-400 mb-2">
                     <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
@@ -87,7 +84,6 @@
             </div>
         </div>
 
-        <!-- Footer -->
         <div class="px-4 sm:px-6 pb-4 sm:pb-5">
             <button onclick="closeModal()" class="w-full py-2.5 rounded-xl bg-gray-100 text-gray-700 text-sm font-medium hover:bg-gray-200 transition">
                 Tutup
@@ -98,27 +94,33 @@
 
 @push('scripts')
 <script>
-
-
     document.querySelectorAll('.pengaduan-item').forEach(item => {
         item.addEventListener('click', () => {
-            const judul       = item.dataset.judul;
-            const lokasi      = item.dataset.lokasi;
-            const deskripsi   = item.dataset.deskripsi;
-            const kategori    = item.dataset.kategori;
-            const tanggal     = item.dataset.tanggal;
-            const status      = item.dataset.status;
-            const catatan     = item.dataset.catatanAdmin;
-            const fotoRaw     = item.dataset.foto;
-            const feedback    = item.dataset.feedback || '';
-            const fotoProgresRaw = item.dataset.fotoProgres || '[]';
+            const judul            = item.dataset.judul;
+            const lokasi           = item.dataset.lokasi;
+            const deskripsi        = item.dataset.deskripsi;
+            const kategori         = item.dataset.kategori;
+            const tanggal          = item.dataset.tanggal;
+            const tanggalSelesai   = item.dataset.tanggalSelesai || '-';
+            const status           = item.dataset.status;
+            const catatan          = item.dataset.catatanAdmin;
+            const fotoRaw          = item.dataset.foto;
+            const feedback         = item.dataset.feedback || '';
+            const fotoProgresRaw   = item.dataset.fotoProgres || '[]';
 
-            document.getElementById('modal-judul').textContent     = judul;
-            document.getElementById('modal-lokasi').textContent    = lokasi;
-            document.getElementById('modal-deskripsi').textContent = deskripsi;
-            document.getElementById('modal-kategori').textContent  = kategori;
-            document.getElementById('modal-tanggal').textContent   = tanggal;
-            document.getElementById('modal-catatan').textContent   = catatan;
+            document.getElementById('modal-judul').textContent         = judul;
+            document.getElementById('modal-lokasi').textContent        = lokasi;
+            document.getElementById('modal-deskripsi').textContent     = deskripsi;
+            document.getElementById('modal-kategori').textContent      = kategori;
+            document.getElementById('modal-tanggal').textContent       = tanggal;
+            document.getElementById('modal-catatan').textContent       = catatan;
+            const tanggalSelesaiWrapper = document.getElementById('modal-tanggal-selesai-wrapper');
+            if (status === 'Selesai') {
+                document.getElementById('modal-tanggal-selesai').textContent = tanggalSelesai;
+                tanggalSelesaiWrapper.classList.remove('hidden');
+            } else {
+                tanggalSelesaiWrapper.classList.add('hidden');
+            }
 
             // Foto Bukti
             const fotoWrapper = document.getElementById('modal-foto-wrapper');
@@ -148,7 +150,7 @@
                 feedbackWrapper.classList.add('hidden');
             }
 
-        
+
             const fotoProgresWrapper = document.getElementById('modal-foto-progres-wrapper');
             const fotoProgresList = document.getElementById('modal-foto-progres-list');
             fotoProgresList.innerHTML = '';
@@ -188,3 +190,4 @@
     });
 </script>
 @endpush
+

@@ -83,7 +83,6 @@
 
         <div class="grid grid-cols-1 xl:grid-cols-3 gap-4">
 
-            {{-- Progress Status --}}
             <div class="bg-white border border-gray-100 rounded-xl shadow-sm p-4 sm:p-5 xl:col-span-1">
                 <h2 class="text-sm font-bold text-gray-700 mb-4 flex items-center gap-2">
                     <i data-lucide="bar-chart-2" class="w-4 h-4 text-blue-500"></i>

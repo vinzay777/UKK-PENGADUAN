@@ -4,7 +4,6 @@
 
 @section('content')
 <div class="flex flex-col h-full">
-    <!-- Breadcrumb -->
     <div class="flex items-center gap-2 text-sm text-gray-600 mb-6">
         <a href="{{ route('siswa.dashboard') }}" class="hover:text-orange-500">FacilityHub</a>
         <i data-lucide="chevron-right" class="w-3 h-3"></i>
@@ -19,14 +18,10 @@
     @endif
 
     <div class="bg-white rounded-xl shadow-lg flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-
-        <!-- Header -->
         <div class="flex items-center gap-2 mb-5 sm:mb-6">
             <i data-lucide="history" class="w-5 h-5 text-orange-500"></i>
             <h2 class="text-lg font-bold text-gray-900">Histori Pengaduan</h2>
         </div>
-
-        <!-- Filter Status -->
         @php
             $filters = [
                 'semua'    => 'Semua',
@@ -46,8 +41,6 @@
                 </a>
             @endforeach
         </div>
-
-        <!-- List Pengaduan -->
         <div class="space-y-4">
 
             @forelse($pengaduan as $p)
@@ -67,6 +60,7 @@
                     data-deskripsi="{{ $p->deskripsi }}"
                     data-kategori="{{ $p->kategori->nama ?? '-' }}"
                     data-tanggal="{{ $p->tanggal_lapor->locale('id')->translatedFormat('d F Y') }}"
+                    data-tanggal-selesai="{{ $p->tanggal_selesai ? $p->tanggal_selesai->locale('id')->translatedFormat('d F Y') : '-' }}"
                     data-status="{{ $s['label'] }}"
                     data-catatan-admin="-"
                     data-feedback="{{ $p->feedback ?? '' }}"
@@ -78,10 +72,10 @@
                             <div class="flex-1 min-w-0">
                                 <p class="font-semibold text-gray-900">{{ $p->judul }}</p>
                                 <p class="text-sm text-blue-500 mt-0.5 truncate">{{ $p->lokasi }} - {{ $deskripsiPreview }}</p>
-                                <div class="flex items-center gap-1 text-xs text-gray-400 mt-1">
+                                {{-- <div class="flex items-center gap-1 text-xs text-gray-400 mt-1">
                                     <i data-lucide="clock" class="w-3 h-3"></i>
                                     <span>{{ $p->created_at->locale('id')->diffForHumans() }}</span>
-                                </div>
+                                </div> --}}
                             </div>
                             @if($p->feedback)
                             {{-- <div class="flex-shrink-0 ml-2">
@@ -95,9 +89,20 @@
                     </div>
                     <div class="flex items-center justify-between sm:justify-end gap-3 sm:ml-4 shrink-0 w-full sm:w-auto">
                         <span class="text-xs font-medium {{ $s['badge'] }} px-3 py-1 rounded-full whitespace-nowrap">{{ $s['label'] }}</span>
-                        <button class="text-gray-400 hover:text-orange-500 transition" title="Lihat Detail">
-                            <i data-lucide="eye" class="w-4 h-4"></i>
-                        </button>
+                        <div class="flex items-center gap-2">
+                            @if(in_array($p->status, ['menunggu', 'diproses']))
+                            <form action="{{ route('siswa.pengaduan.destroy', $p->id) }}" method="POST" class="inline" onsubmit="return confirm('Apakah Anda yakin ingin menghapus pengaduan ini?');">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="text-gray-400 hover:text-red-500 transition" title="Hapus">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </form>
+                            @endif
+                            <button class="text-gray-400 hover:text-orange-500 transition" title="Lihat Detail">
+                                <i data-lucide="eye" class="w-4 h-4"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
 

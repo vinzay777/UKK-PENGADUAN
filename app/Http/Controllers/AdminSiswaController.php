@@ -22,7 +22,7 @@ class AdminSiswaController extends Controller
     {
         $validated = $request->validate([
             'nama' => 'required|string|max:100',
-            'nisn' => 'required|string|max:20|unique:siswa,nisn',
+            'nisn' => 'required|string|min:10|unique:siswa,nisn',
             'email' => 'required|email|max:100|unique:siswa,email',
             'kelas' => 'required|string|max:50',
             'kata_sandi' => 'required|string|min:6',
@@ -67,7 +67,7 @@ class AdminSiswaController extends Controller
     {
         $validated = $request->validate([
             'nama' => 'required|string|max:100',
-            'nisn' => 'required|string|max:20|unique:siswa,nisn,' . $siswa->id,
+            'nisn' => 'required|string|min:10|unique:siswa,nisn,' . $siswa->id,
             'email' => 'required|email|max:100|unique:siswa,email,' . $siswa->id,
             'kelas' => 'required|string|max:50',
         ], [

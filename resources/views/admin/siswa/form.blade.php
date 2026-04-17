@@ -10,7 +10,6 @@
 
 @section('content')
 <div class="flex flex-col h-full">
-	<!-- Breadcrumb -->
 	<div class="flex items-center gap-2 text-sm text-gray-600 mb-4">
 		<a href="{{ route('admin.siswa.index') }}" class="hover:text-orange-500">Kelola Siswa</a>
 		<i data-lucide="chevron-right" class="w-3 h-3"></i>
@@ -19,13 +18,10 @@
 		</span>
 	</div>
 
-	<!-- Main Content -->
 	<div class="bg-white rounded-xl shadow-lg flex-1 overflow-y-auto p-4 sm:p-6 lg:p-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-		<!-- SHOW MODE -->
 		@if($isShow)
 			<div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
 				<div class="xl:col-span-1 space-y-6">
-					<!-- Orange Info Card -->
 					<div class="rounded-3xl bg-orange-500 p-6 text-white shadow-lg">
 						<h1 class="text-2xl font-bold">{{ $siswa->nama }}</h1>
 						<p class="text-white/80 mt-1">Lihat profil lengkap siswa</p>
@@ -62,7 +58,6 @@
 					</div>
 				</div>
 
-				<!-- Right Column - Details -->
 				<div class="xl:col-span-2">
 					<div class="bg-white border border-gray-100 rounded-3xl p-5 sm:p-7 shadow-sm space-y-6">
 						<div>
@@ -132,11 +127,8 @@
 					</div>
 				</div>
 			</div>
-
-		<!-- CREATE & EDIT MODE -->
 		@else
 			<div class="max-w-2xl">
-				<!-- Header -->
 				<div class="flex items-center gap-3 mb-6">
 					<div class="w-11 h-11 rounded-2xl bg-orange-100 text-orange-500 flex items-center justify-center">
 						<i data-lucide="{{ $isCreate ? 'user-plus' : 'edit-3' }}" class="w-5 h-5"></i>
@@ -151,7 +143,7 @@
 					</div>
 				</div>
 
-				<!-- Error Messages -->
+
 				@if($errors->any())
 					<div class="mb-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
 						<p class="font-semibold mb-2">Terdapat beberapa kesalahan:</p>
@@ -163,7 +155,7 @@
 					</div>
 				@endif
 
-				<!-- Form -->
+
 				<form
 					action="{{ $isCreate ? route('admin.siswa.store') : route('admin.siswa.update', $siswa) }}"
 					method="POST"
@@ -173,9 +165,11 @@
 					@if($isEdit) @method('PUT') @endif
 
 					<div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-						<!-- Nama -->
+
 						<div>
-							<label for="nama" class="block text-sm font-semibold text-gray-700 mb-2">Nama Lengkap</label>
+							<label for="nama" class="block text-sm font-semibold text-gray-700 mb-2">Nama Lengkap
+                                <span class="text-red-500">*</span>
+                            </label>
 							<input
 								type="text"
 								id="nama"
@@ -188,9 +182,11 @@
 							@error('nama')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
 						</div>
 
-						<!-- NISN -->
+
 						<div>
-							<label for="nisn" class="block text-sm font-semibold text-gray-700 mb-2">NISN</label>
+							<label for="nisn" class="block text-sm font-semibold text-gray-700 mb-2">NISN
+                                <span class="text-red-500">*</span>
+                            </label>
 							<input
 								type="text"
 								id="nisn"
@@ -203,9 +199,11 @@
 							@error('nisn')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
 						</div>
 
-						<!-- Email -->
+
 						<div>
-							<label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email</label>
+							<label for="email" class="block text-sm font-semibold text-gray-700 mb-2">Email
+                                <span class="text-red-500">*</span>
+                            </label>
 							<input
 								type="email"
 								id="email"
@@ -218,9 +216,11 @@
 							@error('email')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
 						</div>
 
-						<!-- Kelas -->
+
 						<div>
-							<label for="kelas" class="block text-sm font-semibold text-gray-700 mb-2">Kelas</label>
+							<label for="kelas" class="block text-sm font-semibold text-gray-700 mb-2">Kelas
+                                <span class="text-red-500">*</span>
+                            </label>
 							<input
 								type="text"
 								id="kelas"
@@ -233,10 +233,12 @@
 							@error('kelas')<p class="text-red-500 text-xs mt-1">{{ $message }}</p>@enderror
 						</div>
 
-						<!-- Password (Only on Create) -->
+
 						@if($isCreate)
 							<div class="md:col-span-2">
-								<label for="kata_sandi" class="block text-sm font-semibold text-gray-700 mb-2">Password</label>
+								<label for="kata_sandi" class="block text-sm font-semibold text-gray-700 mb-2">Password
+                                    <span class="text-red-500">*</span>
+                                </label>
 								<input
 									type="password"
 									id="kata_sandi"
@@ -250,7 +252,7 @@
 						@endif
 					</div>
 
-					<!-- Action Buttons -->
+
 					<div class="flex flex-col sm:flex-row gap-3 pt-2">
 						<button
 							type="submit"

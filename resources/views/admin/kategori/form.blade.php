@@ -57,7 +57,6 @@
 					</div>
 				</div>
 
-				<!-- Right Column - Details -->
 				<div class="xl:col-span-2">
 					<div class="bg-white border border-gray-100 rounded-3xl p-5 sm:p-7 shadow-sm space-y-6">
 						<div>
@@ -122,10 +121,8 @@
 				</div>
 			</div>
 
-		<!-- CREATE & EDIT MODE -->
 		@else
 			<div class="max-w-2xl">
-				<!-- Header -->
 				<div class="flex items-center gap-3 mb-6">
 					<div class="w-11 h-11 rounded-2xl bg-orange-100 text-orange-500 flex items-center justify-center">
 						<i data-lucide="{{ $isCreate ? 'plus-circle' : 'edit-3' }}" class="w-5 h-5"></i>
@@ -140,7 +137,6 @@
 					</div>
 				</div>
 
-				<!-- Error Messages -->
 				@if($errors->any())
 					<div class="mb-6 rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
 						<p class="font-semibold mb-2">Terdapat beberapa kesalahan:</p>
@@ -152,7 +148,6 @@
 					</div>
 				@endif
 
-				<!-- Form -->
 				<form
 					action="{{ $isCreate ? route('admin.kategori.store') : route('admin.kategori.update', $kategori) }}"
 					method="POST"
@@ -176,7 +171,6 @@
 						{{-- <p class="text-gray-500 text-xs mt-2">Nama kategori harus unik dan deskriptif</p> --}}
 					</div>
 
-					<!-- Action Buttons -->
 					<div class="flex flex-col sm:flex-row gap-3 border-t border-dashed border-gray-200 pt-6">
 						<button
 							type="submit"

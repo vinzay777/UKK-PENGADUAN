@@ -27,6 +27,7 @@ Route::middleware('auth:siswa')->prefix('siswa')->name('siswa.')->group(function
     Route::get('/dashboard', [PengaduanController::class, 'dashboard'])->name('dashboard');
     Route::get('/pengaduan', [PengaduanController::class, 'index'])->name('pengaduan');
     Route::post('/pengaduan', [PengaduanController::class, 'store'])->name('pengaduan.store');
+    Route::delete('/pengaduan/{id}', [PengaduanController::class, 'destroy'])->name('pengaduan.destroy');
     Route::get('/histori', [PengaduanController::class, 'histori'])->name('histori');
     Route::get('/profile', [SiswaProfileController::class, 'edit'])->name('profile');
     Route::put('/profile', [SiswaProfileController::class, 'update'])->name('profile.update');

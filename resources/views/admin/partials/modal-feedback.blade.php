@@ -1,12 +1,11 @@
 
 <div id="feedbackModal" class="fixed inset-0 z-50 hidden items-center justify-center">
-    {{-- Backdrop --}}
+
     <div onclick="closeModal()" class="absolute inset-0 bg-black/40"></div>
 
-    {{-- Panel --}}
+
     <div class="relative bg-white rounded-2xl shadow-2xl w-full max-w-2xl mx-4 max-h-[90vh] overflow-y-auto [&::-webkit-scrollbar]:hidden [scrollbar-width:none]">
 
-        {{-- Modal Header --}}
         <div class="flex items-center justify-between px-5 py-3.5 border-b border-gray-100">
             <h2 class="font-semibold text-gray-800 text-sm flex items-center gap-2">
                 Update Status Pengaduan
@@ -128,11 +127,17 @@ function handleStatusFormSubmit(event) {
         return;
     }
 
-    // Submit form normally
     form.submit();
 }
 
 function setStatus(btn) {
+    const currentStatus = document.getElementById('m-status-input').value;
+
+    if (currentStatus === 'selesai') {
+        alert('Status sudah selesai, tidak bisa diubah lagi!');
+        return;
+    }
+
     const statusBtns = document.querySelectorAll('.status-btn');
     statusBtns.forEach(b => b.classList.remove('bg-blue-600', 'text-white', 'border-blue-600'));
     statusBtns.forEach(b => b.classList.add('bg-white', 'text-gray-400', 'border-gray-200'));

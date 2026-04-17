@@ -94,10 +94,55 @@ class PengaduanController extends Controller
             'lokasi'       => $validated['lokasi'],
             'status'       => 'menunggu',
             'tanggal_lapor' => now()->toDateString(),
+            'tanggal_selesai' => now()->toDateString(),
             'foto'         => !empty($fotoPaths) ? $fotoPaths : null,
         ]);
 
         return redirect()->route('siswa.histori')
             ->with('success', 'Pengaduan berhasil dikirim! Kami akan segera menindaklanjutinya.');
+    }
+
+    public function destroy($id)
+    {
+        $siswa = Auth::guard('siswa')->user();
+        $pengaduan = Pengaduan::find($id);
+
+        // Cek apakah pengaduan ditemukan
+        if (!$pengaduan) {
+            return redirect()->route('siswa.histori')
+                ->with('error', 'Pengaduan tidak ditemukan.');
+        }
+
+        // Cek apakah pengaduan milik siswa yang login
+        if ($pengaduan->siswa_id !== $siswa->id) {
+            return redirect()->route('siswa.histori')
+                ->with('error', 'Anda tidak memiliki akses untuk menghapus pengaduan ini.');
+        }
+
+        // Cek apakah pengaduan berstatus menunggu atau diproses
+        if (!in_array($pengaduan->status, ['menunggu', 'diproses'])) {
+            return redirect()->route('siswa.histori')
+                ->with('error', 'Pengaduan tidak dapat dihapus karena sudah selesai.');
+        }
+
+        // Hapus foto jika ada
+        if ($pengaduan->foto) {
+            foreach ($pengaduan->foto as $foto) {
+                Storage::disk('public')->delete($foto);
+            }
+        }
+
+        // Hapus foto progres jika ada
+        if ($pengaduan->foto_progres) {
+            foreach ($pengaduan->foto_progres as $foto) {
+                Storage::disk('public')->delete($foto);
+            }
+        }
+
+        // Hapus pengaduan
+        $pengaduan->delete();
+
+        return redirect()->route('siswa.histori')
+            ->with('success', 'Pengaduan berhasil dihapus.');
     }
 }

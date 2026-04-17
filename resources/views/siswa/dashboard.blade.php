@@ -221,10 +221,10 @@
                                             {{ $item->lokasi }}
                                         </span>
                                     @endif
-                                    <span class="flex items-center gap-1 text-xs text-gray-400">
+                                    {{-- <span class="flex items-center gap-1 text-xs text-gray-400">
                                         <i data-lucide="clock" class="w-3 h-3"></i>
                                         {{ $item->created_at->diffForHumans() }}
-                                    </span>
+                                    </span> --}}
                                 </div>
                                 @if ($item->deskripsi)
                                     <p class="text-xs text-gray-400 truncate mt-0.5">{{ str($item->deskripsi)->limit(70) }}
